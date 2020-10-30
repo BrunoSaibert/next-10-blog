@@ -1,5 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
+import { fetchPostContent } from "../../lib/posts";
 
 interface IPost {
   title: string;
@@ -27,19 +28,13 @@ export default function BlogPostPage({ blog }: PageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const fs = require("fs");
-
-  const files = fs.readdirSync(`${process.cwd()}/contents`, "utf-8");
-
-  const markdownFileNames = files
-    .filter(fn => fn.endsWith(".md"))
-    .map(fn => fn.replace(".md", ""));
+  const markdownFileNames = fetchPostContent();
 
   return {
     paths: markdownFileNames.map(fileName => {
       return {
         params: {
-          slug: fileName
+          slug: fileName.slug
         }
       };
     }),

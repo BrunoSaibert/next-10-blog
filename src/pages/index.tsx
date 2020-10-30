@@ -32,23 +32,6 @@ export default function Home({ blogs }: PageProps) {
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async () => {
-  // const fs = require("fs");
-  // const matter = require("gray-matter");
-
-  // const files = fs.readdirSync(`${process.cwd()}/contents`, "utf-8");
-
-  // const blogs = files
-  //   .filter(fn => fn.endsWith(".md"))
-  //   .map(fn => {
-  //     const path = `${process.cwd()}/contents/${fn}`;
-  //     const rawContent = fs.readFileSync(path, {
-  //       encoding: "utf-8"
-  //     });
-  //     const { data } = matter(rawContent);
-
-  //     return { ...data };
-  //   });
-
   const blogs = fetchPostContent();
 
   return {
